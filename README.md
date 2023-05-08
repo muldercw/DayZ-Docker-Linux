@@ -1,2 +1,2 @@
 # DayZ-Docker-Linux
-Run a DayZ Server in a linux container
+Run DayZ Server in a linux container
