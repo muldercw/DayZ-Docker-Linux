@@ -32,4 +32,25 @@ docker-compose up --env-file mynewserver.env --entrypoint /bin/bash --command qu
 Default files will have been created in config/mynewserver and missions/mynewserver.
 Edit these as required or copy your existing files into these folders.
 
-Note, the config directories file names must be kept the same. Make sure the mission folder is correctlt referenced.
+Note, the config directories file names must be kept the same. Make sure the mission folder is correctly referenced in your serverDZ.cfg.
+
+**6**
+Ready to launch!
+Some usefel commands:
+
+Start a server:
+```
+docker-compose up -d --env-file mynewserver.env
+```
+Stop a server:
+```
+docker-compose down -p myservername
+```
+Stop all servers:
+```
+docker-compose down
+```
+View logs (Ctrl+C to exit):
+```
+docker-compose logs -f
+```

@@ -43,7 +43,7 @@ services:
             CPU_COUNT: {CPU_COUNT:-4}
             MODS: {MODS}
             AUTO_MODS: {AUTO_MODS:-false}
-            MOD_ID: ''
+            MOD_IDS: {MOD_IDS}
             UPDATE_SERVER: {UPDATE_SERVER:-true}
             UPDATE_MODS: {UPDATE_MODS:-false}
             DELETE_LOGS: {DELETE_LOGS:-false}

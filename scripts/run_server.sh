@@ -10,7 +10,10 @@ fi
 if [ $UPDATE_MODS = true ]
 then
     echo "Checking for mod updates..."
-    source /update_mods.sh -l $MOD_ID
+    for $m in $MOD_IDS
+    do
+        source /download.sh -w $m
+    done
 fi
 
 # Automatically load all mods
