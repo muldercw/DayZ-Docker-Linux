@@ -16,14 +16,14 @@ services:
       - "${STEAM_PORT:-2304}:${STEAM_PORT:-2304}/udp"
       - "${RCON_PORT:-2306}:${RCON_PORT:-2306}"
     volumes:
-      - ./workshop:/server/mods
-      - ./server:/server
-      - ./profiles/${SERVER_NAME:-myserver}:/server/profile
-      - ./missions/${SERVER_NAME:-myserver}:/server/mpmissions
-      - ./config/${SERVER_NAME:-myserver}/serverDZ.cfg:/server/serverDZ.cfg:ro
-      - ./config/${SERVER_NAME:-myserver}/beserver_x64.cfg:/server/battleye/beserver_x64.cfg:ro
+      - workshop:/server/mods
+      - server:/server
+      - profiles/${SERVER_NAME:-myserver}:/server/profile
+      - missions/${SERVER_NAME:-myserver}:/server/mpmissions
+      - config/${SERVER_NAME:-myserver}/serverDZ.cfg:/server/serverDZ.cfg:ro
+      - config/${SERVER_NAME:-myserver}/beserver_x64.cfg:/server/battleye/beserver_x64.cfg:ro
       - ${MOUNT_OVERRIDES}
-      - ./steamcmd:/root/.steam
+      - steamcmd:/root/.steam
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - PUID=${PUID:-1000}
