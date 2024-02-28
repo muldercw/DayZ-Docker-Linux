@@ -1,55 +1,44 @@
-version: '2'
+version: '3'
 
 services:
-    server:
-        platform: linux/amd64
-        build:
-            context: .
-            dockerfile: Dockerfile
-        env_file: {SERVER_NAME}.env
-        project_name: {SERVER_NAME:-myserver}
-        container_name: {SERVER_NAME:-myserver}-server          # Deprecated. Will be removed in future.
-        restart: {RESTART:-'unless-stopped'}
-        ports:
-            - {GAME_PORT:-2302}:{GAME_PORT:-2302}
-            - {GAME_PORT:-2302}:{GAME_PORT:-2302}/udp
-            - {STEAM_PORT:-2304}:{STEAM_PORT:-2304}
-            - {STEAM_PORT:-2304}:{STEAM_PORT:-2304}/udp
-            - {RCON_PORT:-2306}:{RCON_PORT:-2306}
-        volumes:
-            # These are default values! Use the .env file to change settings!
-            # Directory used to download Workshop mods. 
-            - ./workshop:/server/mods
-            # Directory used to install the server files.
-            - ./server:/server
-            # Directory used for "profiles"
-            - ./profiles/{SERVER_NAME:-myserver}:/server/profile
-            # Directory for external "mpmissions" (otherwise only default misisons available).
-            - ./missions/{SERVER_NAME:-myserver}:/server/mpmissions
-            # Server config. This is mounted as "read-only" in the container.
-            - ./config/{SERVER_NAME:-myserver}/serverDZ.cfg:/server/serverDZ.cfg:ro
-            # Battleye config. This is mounted as "read-only" in the container.
-            - ./config/{SERVER_NAME:-myserver}/beserver_x64.cfg:/server/battleye/beserver_x64.cfg:ro
-            # Any mount overrides declared in .env file.
-            {MOUNT_OVERRIDES}
-            # Persist SteamCMD updates, so it doesn't need to re-download the update every time.
-            - ./steamcmd:/root/.steam
-            # The following is to allow the server and mods download scripts to launch a steamcmd container. The user specified below must be in the "docker" group.
-            - /var/run/docker.sock:/var/run/docker.sock
-        environment:
-            # These are default values! Use the .env file to change settings!
-            PUID: {PUID:-1000}
-            PGID: {PGID:-1000}
-            CPU_COUNT: {CPU_COUNT:-4}
-            MODS: {MODS}
-            AUTO_MODS: {AUTO_MODS:-false}
-            MOD_IDS: {MOD_IDS}
-            UPDATE_SERVER: {UPDATE_SERVER:-true}
-            UPDATE_MODS: {UPDATE_MODS:-false}
-            DELETE_LOGS: {DELETE_LOGS:-false}
-            DEBUG: {DEBUG:-false}
-            STEAM_APP_ID: {STEAM_APP_ID:-1042420}
-            GAME_PORT: {GAME_PORT:-2302}
-            CONFIG_FILE: './serverDZ.cfg'
-            PROFILE_DIR: './profile'
-        mem_limit: {MEM_LIMIT:-4g}
+  server:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ${SERVER_NAME}.env
+    container_name: ${SERVER_NAME:-myserver}-server
+    restart: ${RESTART:-unless-stopped}
+    ports:
+      - "${GAME_PORT:-2302}:${GAME_PORT:-2302}"
+      - "${GAME_PORT:-2302}:${GAME_PORT:-2302}/udp"
+      - "${STEAM_PORT:-2304}:${STEAM_PORT:-2304}"
+      - "${STEAM_PORT:-2304}:${STEAM_PORT:-2304}/udp"
+      - "${RCON_PORT:-2306}:${RCON_PORT:-2306}"
+    volumes:
+      - ./workshop:/server/mods
+      - ./server:/server
+      - ./profiles/${SERVER_NAME:-myserver}:/server/profile
+      - ./missions/${SERVER_NAME:-myserver}:/server/mpmissions
+      - ./config/${SERVER_NAME:-myserver}/serverDZ.cfg:/server/serverDZ.cfg:ro
+      - ./config/${SERVER_NAME:-myserver}/beserver_x64.cfg:/server/battleye/beserver_x64.cfg:ro
+      - ${MOUNT_OVERRIDES}
+      - ./steamcmd:/root/.steam
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - CPU_COUNT=${CPU_COUNT:-4}
+      - MODS=${MODS}
+      - AUTO_MODS=${AUTO_MODS:-false}
+      - MOD_IDS=${MOD_IDS}
+      - UPDATE_SERVER=${UPDATE_SERVER:-true}
+      - UPDATE_MODS=${UPDATE_MODS:-false}
+      - DELETE_LOGS=${DELETE_LOGS:-false}
+      - DEBUG=${DEBUG:-false}
+      - STEAM_APP_ID=${STEAM_APP_ID:-1042420}
+      - GAME_PORT=${GAME_PORT:-2302}
+      - CONFIG_FILE=./serverDZ.cfg
+      - PROFILE_DIR=./profile
+    mem_limit: ${MEM_LIMIT:-8g}
