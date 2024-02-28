@@ -16,6 +16,6 @@ WORKDIR /server
 # Experimental:
 # STEAM_APP_ID=1042420
 ENV STEAM_APP_ID=1042420
-
+USER root
 VOLUME ["/server"]
 ENTRYPOINT ["/run_server.sh"]
