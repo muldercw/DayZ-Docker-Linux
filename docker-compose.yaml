@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file:
-      - ${SERVER_NAME}.env
+      - myserver.env
     container_name: ${SERVER_NAME:-myserver}-server
     restart: ${RESTART:-unless-stopped}
     ports:
