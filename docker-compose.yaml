@@ -40,4 +40,4 @@ services:
       - GAME_PORT=${GAME_PORT:-2302}
       - CONFIG_FILE=./serverDZ.cfg
       - PROFILE_DIR=./profile
-    mem_limit: ${MEM_LIMIT:-8g}
+
