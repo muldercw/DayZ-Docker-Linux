@@ -7,9 +7,9 @@ RUN apt update
 RUN echo steam steam/question select "I AGREE" | debconf-set-selections
 RUN apt install -y curl cpio libcap2 steamcmd
 
-COPY ./scripts/* /server/
-WORKDIR /server
 
+WORKDIR /server
+COPY ./scripts/* /
 # Stable:
 # STEAM_APP_ID=223350
 #
