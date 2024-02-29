@@ -1,42 +1,44 @@
 version: '3'
-
 services:
   server:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - myserver.env
-    container_name: ${SERVER_NAME:-myserver}-server
-    restart: ${RESTART:-unless-stopped}
+    environment:
+      - SERVER_NAME=Mulder
+      - CPU_COUNT=12
+      - MEM_LIMIT=40g
+      - PUID=1000
+      - PGID=1000
+      - RESTART=unless-stopped
+      - GAME_PORT=2302
+      - STEAM_PORT=2304
+      - RCON_PORT=2306
+      - GAME_PASSWORD=
+      - ADMIN_PASSWORD=
+      - RCON_PASSWORD=
+      - MOUNT_OVERRIDES=
+      - MOD_IDS=3166096719,
+      - MODS=
+      - AUTO_MODS=false
+      - STEAM_APP_ID=1042420
+      - UPDATE_SERVER=true
+      - UPDATE_MODS=true
+      - DEBUG=true
+    container_name: mulder-server
+    restart: unless-stopped
     ports:
-      - "${GAME_PORT:-2302}:${GAME_PORT:-2302}"
-      - "${GAME_PORT:-2302}:${GAME_PORT:-2302}/udp"
-      - "${STEAM_PORT:-2304}:${STEAM_PORT:-2304}"
-      - "${STEAM_PORT:-2304}:${STEAM_PORT:-2304}/udp"
-      - "${RCON_PORT:-2306}:${RCON_PORT:-2306}"
+      - "2302:2302"
+      - "2302:2302/udp"
+      - "2304:2304"
+      - "2304:2304/udp"
+      - "2306:2306"
     volumes:
       - ./workshop:/server/mods
       - ./server:/server
-      - ./profiles/${SERVER_NAME:-myserver}:/server/profile
-      - ./missions/${SERVER_NAME:-myserver}:/server/mpmissions
-      - ./config/${SERVER_NAME:-myserver}/serverDZ.cfg:/server/serverDZ.cfg:ro
-      - ./config/${SERVER_NAME:-myserver}/beserver_x64.cfg:/server/battleye/beserver_x64.cfg:ro
-      - ${MOUNT_OVERRIDES}
+      - ./profiles/mulder-myserver:/server/profile
+      - ./missions/mulder-myserver:/server/mpmissions
+      - ./config/mulder-myserver/serverDZ.cfg:/server/serverDZ.cfg:ro
+      - ./config/mulder-myserver/beserver_x64.cfg:/server/battleye/beserver_x64.cfg:ro
       - ./steamcmd:/root/.steam
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
-      - CPU_COUNT=${CPU_COUNT:-4}
-      - MODS=${MODS}
-      - AUTO_MODS=${AUTO_MODS:-false}
-      - MOD_IDS=${MOD_IDS}
-      - UPDATE_SERVER=${UPDATE_SERVER:-true}
-      - UPDATE_MODS=${UPDATE_MODS:-false}
-      - DELETE_LOGS=${DELETE_LOGS:-false}
-      - DEBUG=${DEBUG:-false}
-      - STEAM_APP_ID=${STEAM_APP_ID:-1042420}
-      - GAME_PORT=${GAME_PORT:-2302}
-      - CONFIG_FILE=./serverDZ.cfg
-      - PROFILE_DIR=./profile
