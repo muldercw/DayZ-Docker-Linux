@@ -7,7 +7,7 @@ RUN apt update
 RUN echo steam steam/question select "I AGREE" | debconf-set-selections
 RUN apt install -y curl cpio libcap2 steamcmd
 
-COPY ./scripts/* /server
+COPY ./scripts/* /server/
 WORKDIR /server
 
 # Stable:
